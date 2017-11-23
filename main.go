@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/toxinu/dekiteru/cmd"
+	"github.com/ulule/dekiteru/cmd"
 )
 
 func main() {
