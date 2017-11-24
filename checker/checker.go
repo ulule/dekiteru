@@ -4,32 +4,31 @@ import (
 	"errors"
 	"time"
 
-	"github.com/ulule/dekiteru/contrib"
+	"github.com/ulule/dekiteru/services"
 )
 
-type Checker struct {
-	Services map[string]func() error
-}
+type Checker struct{}
 
 func New() *Checker {
-	return &Checker{Services: contrib.GetServices()}
+	return &Checker{}
 }
 
-func (a Checker) Run(service string, interval int, retries int) error {
+func (a Checker) Run(service string, interval int, retries int, parameters map[string]interface{}) error {
 	var (
 		delta time.Duration
 		start time.Time
 		err   error
+		code  int
 	)
-	s := contrib.GetServices()[service]
+	s := services.GetService(service)
 	if s == nil {
-		return errors.New("This service does not exist.")
+		return errors.New("this service does not exist")
 	}
 	for t := 1; t <= retries; t++ {
 		start = time.Now()
 
-		err = s()
-		if err == nil {
+		code, err = s.Run(parameters)
+		if code > 1 && err == nil {
 			return err
 		}
 
