@@ -6,9 +6,9 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
-type RedisService struct{}
+type Redis struct{}
 
-func (RedisService) Run(parameters map[string]interface{}) (int, error) {
+func (Redis) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		c   redis.Conn
 		url string
@@ -30,11 +30,11 @@ func (RedisService) Run(parameters map[string]interface{}) (int, error) {
 	return 0, nil
 }
 
-func (RedisService) Name() string {
+func (Redis) Name() string {
 	return "redis"
 }
 
-func (RedisService) Parameters() []string {
+func (Redis) Parameters() []string {
 	return []string{
 		"url",
 	}

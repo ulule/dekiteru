@@ -20,7 +20,7 @@ func (Checker) Run(service string, interval int, retries int, parameters map[str
 		err   error
 		code  int
 	)
-	s := services.GetService(service)
+	s := services.Get(service)
 	if s == nil {
 		return errors.New("this service does not exist")
 	}

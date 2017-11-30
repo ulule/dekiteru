@@ -6,12 +6,12 @@ type Service interface {
 }
 
 var Services = map[string]Service{
-	"postgresql":    PostgresqlService{},
-	"redis":         RedisService{},
-	"elasticsearch": ElasticSearchService{},
+	"postgresql":    Postgresql{},
+	"redis":         Redis{},
+	"elasticsearch": Elasticsearch{},
 }
 
-func GetService(name string) Service {
+func Get(name string) Service {
 	s := Services[name]
 	if s == nil {
 		return nil

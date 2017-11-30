@@ -9,9 +9,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type PostgresqlService struct{}
+type Postgresql struct{}
 
-func (PostgresqlService) Run(parameters map[string]interface{}) (int, error) {
+func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		dsn string
 		err error
@@ -38,11 +38,11 @@ func (PostgresqlService) Run(parameters map[string]interface{}) (int, error) {
 	return 0, nil
 }
 
-func (PostgresqlService) Name() string {
+func (Postgresql) Name() string {
 	return "postgresql"
 }
 
-func (PostgresqlService) Parameters() []string {
+func (Postgresql) Parameters() []string {
 	return []string{
 		"dsn",
 	}

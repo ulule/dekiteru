@@ -6,9 +6,9 @@ import (
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
-type ElasticSearchService struct{}
+type Elasticsearch struct{}
 
-func (ElasticSearchService) Run(parameters map[string]interface{}) (int, error) {
+func (Elasticsearch) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		url string
 		ok  bool
@@ -28,11 +28,11 @@ func (ElasticSearchService) Run(parameters map[string]interface{}) (int, error) 
 	return 0, nil
 }
 
-func (ElasticSearchService) Name() string {
+func (Elasticsearch) Name() string {
 	return "elasticsearch"
 }
 
-func (ElasticSearchService) Parameters() []string {
+func (Elasticsearch) Parameters() []string {
 	return []string{
 		"url",
 	}
