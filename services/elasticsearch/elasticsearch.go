@@ -1,4 +1,4 @@
-package services
+package elasticsearch
 
 import (
 	"log"
@@ -6,8 +6,12 @@ import (
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
-// Elasticsearch service checker.
-func Elasticsearch(parameters map[string]interface{}) (int, error) {
+const (
+	defaultURL = "http://localhost:9201"
+)
+
+// Check checks Elasticsearch service.
+func Check(parameters map[string]interface{}) (int, error) {
 	var (
 		url string
 		ok  bool
@@ -16,7 +20,7 @@ func Elasticsearch(parameters map[string]interface{}) (int, error) {
 
 	url, ok = parameters["url"].(string)
 	if !ok || url == "" {
-		url = "http://localhost:9201"
+		url = defaultURL
 	}
 
 	log.Printf(`url: "%s"\n`, url)

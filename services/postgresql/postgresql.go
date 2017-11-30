@@ -1,4 +1,4 @@
-package services
+package postgresql
 
 import (
 	"database/sql"
@@ -10,8 +10,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Postgres service checker.
-func Postgres(parameters map[string]interface{}) (int, error) {
+const (
+	defaultDSN = "postgres://?connect_timeout=5"
+)
+
+// Check checks PostgreSQL service.
+func Check(parameters map[string]interface{}) (int, error) {
 	var (
 		dsn string
 		err error
@@ -20,7 +24,7 @@ func Postgres(parameters map[string]interface{}) (int, error) {
 
 	dsn, ok = parameters["dsn"].(string)
 	if !ok || dsn == "" {
-		dsn = "postgres://?connect_timeout=5"
+		dsn = defaultDSN
 	}
 
 	if !strings.Contains(dsn, "connect_timeout") {

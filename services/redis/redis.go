@@ -1,15 +1,19 @@
-package services
+package redis
 
 import (
 	"log"
 
-	"github.com/garyburd/redigo/redis"
+	redigo "github.com/garyburd/redigo/redis"
 )
 
-// Redis service checker.
-func Redis(parameters map[string]interface{}) (int, error) {
+const (
+	defaultURL = "redis://localhost:6379/0"
+)
+
+// Check checks Redis service.
+func Check(parameters map[string]interface{}) (int, error) {
 	var (
-		c   redis.Conn
+		c   redigo.Conn
 		url string
 		ok  bool
 		err error
@@ -17,12 +21,12 @@ func Redis(parameters map[string]interface{}) (int, error) {
 
 	url, ok = parameters["url"].(string)
 	if !ok || url == "" {
-		url = "redis://localhost:6379/0"
+		url = defaultURL
 	}
 
 	log.Printf("url: \"%s\"\n", url)
 
-	c, err = redis.DialURL(url)
+	c, err = redigo.DialURL(url)
 	if err != nil {
 		log.Printf("Error: \"%s\"\n", err)
 		return 10, err
