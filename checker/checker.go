@@ -16,8 +16,8 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 		code  int
 	)
 
-	s := services.Get(service)
-	if s == nil {
+	s, ok := services.Services[service]
+	if !ok {
 		return errors.New("this service does not exist")
 	}
 
