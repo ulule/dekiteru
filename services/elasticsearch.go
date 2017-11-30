@@ -8,7 +8,7 @@ import (
 
 type ElasticSearchService struct{}
 
-func (s ElasticSearchService) Run(parameters map[string]interface{}) (int, error) {
+func (ElasticSearchService) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		url string
 		ok  bool
@@ -28,11 +28,11 @@ func (s ElasticSearchService) Run(parameters map[string]interface{}) (int, error
 	return 0, nil
 }
 
-func (s ElasticSearchService) Name() string {
+func (ElasticSearchService) Name() string {
 	return "elasticsearch"
 }
 
-func (s ElasticSearchService) Parameters() []string {
+func (ElasticSearchService) Parameters() []string {
 	return []string{
 		"url",
 	}

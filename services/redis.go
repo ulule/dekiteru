@@ -8,7 +8,7 @@ import (
 
 type RedisService struct{}
 
-func (s RedisService) Run(parameters map[string]interface{}) (int, error) {
+func (RedisService) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		c   redis.Conn
 		url string
@@ -30,11 +30,11 @@ func (s RedisService) Run(parameters map[string]interface{}) (int, error) {
 	return 0, nil
 }
 
-func (s RedisService) Name() string {
+func (RedisService) Name() string {
 	return "redis"
 }
 
-func (s RedisService) Parameters() []string {
+func (RedisService) Parameters() []string {
 	return []string{
 		"url",
 	}

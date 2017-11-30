@@ -13,7 +13,7 @@ func New() *Checker {
 	return &Checker{}
 }
 
-func (a Checker) Run(service string, interval int, retries int, parameters map[string]interface{}) error {
+func (Checker) Run(service string, interval int, retries int, parameters map[string]interface{}) error {
 	var (
 		delta time.Duration
 		start time.Time

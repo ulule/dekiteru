@@ -11,7 +11,7 @@ import (
 
 type PostgresqlService struct{}
 
-func (s PostgresqlService) Run(parameters map[string]interface{}) (int, error) {
+func (PostgresqlService) Run(parameters map[string]interface{}) (int, error) {
 	var (
 		dsn string
 		err error
@@ -38,11 +38,11 @@ func (s PostgresqlService) Run(parameters map[string]interface{}) (int, error) {
 	return 0, nil
 }
 
-func (s PostgresqlService) Name() string {
+func (PostgresqlService) Name() string {
 	return "postgresql"
 }
 
-func (s PostgresqlService) Parameters() []string {
+func (PostgresqlService) Parameters() []string {
 	return []string{
 		"dsn",
 	}
