@@ -1,6 +1,6 @@
 # Dekiteru
 
-Dekiteru is a tool that check if a service is ready to use.
+Dekiteru is a tool that checks if a service is ready to use.
 
 ## Examples
 
