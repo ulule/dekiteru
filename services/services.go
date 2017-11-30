@@ -6,11 +6,11 @@ import (
 	"github.com/ulule/dekiteru/services/redis"
 )
 
-// Checker is a service checker.
-type Checker func(parameters map[string]interface{}) (int, error)
+// ServiceFunc is the service check function.
+type ServiceFunc func(parameters map[string]interface{}) (int, error)
 
 // Services are built-in service checkers.
-var Services = map[string]Checker{
+var Services = map[string]ServiceFunc{
 	"postgres":      postgres.Run,
 	"redis":         redis.Run,
 	"elasticsearch": elasticsearch.Run,
