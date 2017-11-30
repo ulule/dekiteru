@@ -5,8 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ulule/dekiteru/checker"
 	"github.com/urfave/cli"
+
+	"github.com/ulule/dekiteru/checker"
 )
 
 // Cmd is the CLI application.
@@ -28,7 +29,10 @@ func New() *Cmd {
 			Action: func(ctx *cli.Context) error {
 				if ctx.String("service") == "" {
 					fmt.Println("Error: --service parameter is missing")
-					cli.ShowAppHelp(ctx)
+					err := cli.ShowAppHelp(ctx)
+					if err != nil {
+						return err
+					}
 					return cli.NewExitError("", 1)
 				}
 
@@ -73,6 +77,7 @@ func New() *Cmd {
 	return &Cmd{App: a}
 }
 
-func (c Cmd) Run() {
-	c.App.Run(os.Args)
+// Run runs the command.
+func (c Cmd) Run() error {
+	return c.App.Run(os.Args)
 }
