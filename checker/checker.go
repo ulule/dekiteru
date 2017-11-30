@@ -1,7 +1,7 @@
 package checker
 
 import (
-	"errors"
+	"fmt"
 	"time"
 
 	"github.com/ulule/dekiteru/services"
@@ -16,15 +16,15 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 		code  int
 	)
 
-	s, ok := services.Services[service]
+	checkr, ok := services.Services[service]
 	if !ok {
-		return errors.New("this service does not exist")
+		return fmt.Errorf("%s service does not exist", service)
 	}
 
 	for t := 1; t <= retries; t++ {
 		start = time.Now()
 
-		code, err = s.Run(parameters)
+		code, err = checkr(parameters)
 		if code > 1 && err == nil {
 			return err
 		}

@@ -1,15 +1,11 @@
 package services
 
-// Service represents a service.
-type Service interface {
-	Run(parameters map[string]interface{}) (int, error)
-	Name() string
-	Parameters() []string
-}
+// Service is a service checker.
+type Service func(parameters map[string]interface{}) (int, error)
 
 // Services are built-in services.
 var Services = map[string]Service{
-	"postgresql":    Postgresql{},
-	"redis":         Redis{},
-	"elasticsearch": Elasticsearch{},
+	"postgresql":    Postgres,
+	"redis":         Redis,
+	"elasticsearch": Elasticsearch,
 }

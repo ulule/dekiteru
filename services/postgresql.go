@@ -10,11 +10,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Postgresql service
-type Postgresql struct{}
-
-// Run implements Service interface.
-func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
+// Postgres service checker.
+func Postgres(parameters map[string]interface{}) (int, error) {
 	var (
 		dsn string
 		err error
@@ -45,16 +42,4 @@ func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
 	}
 
 	return 0, nil
-}
-
-// Name implements Service interface.
-func (Postgresql) Name() string {
-	return "postgresql"
-}
-
-// Parameters implements Service interface.
-func (Postgresql) Parameters() []string {
-	return []string{
-		"dsn",
-	}
 }

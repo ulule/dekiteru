@@ -6,11 +6,8 @@ import (
 	elastic "gopkg.in/olivere/elastic.v5"
 )
 
-// Elasticsearch service
-type Elasticsearch struct{}
-
-// Run implements Service interface.
-func (Elasticsearch) Run(parameters map[string]interface{}) (int, error) {
+// Elasticsearch service checker.
+func Elasticsearch(parameters map[string]interface{}) (int, error) {
 	var (
 		url string
 		ok  bool
@@ -31,16 +28,4 @@ func (Elasticsearch) Run(parameters map[string]interface{}) (int, error) {
 	}
 
 	return 0, nil
-}
-
-// Name implements Service interface.
-func (Elasticsearch) Name() string {
-	return "elasticsearch"
-}
-
-// Parameters implements Service interface.
-func (Elasticsearch) Parameters() []string {
-	return []string{
-		"url",
-	}
 }

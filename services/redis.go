@@ -6,11 +6,8 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
-// Redis service
-type Redis struct{}
-
-// Run implements Service interface.
-func (Redis) Run(parameters map[string]interface{}) (int, error) {
+// Redis service checker.
+func Redis(parameters map[string]interface{}) (int, error) {
 	var (
 		c   redis.Conn
 		url string
@@ -33,16 +30,4 @@ func (Redis) Run(parameters map[string]interface{}) (int, error) {
 	defer c.Close()
 
 	return 0, nil
-}
-
-// Name implements Service interface.
-func (Redis) Name() string {
-	return "redis"
-}
-
-// Parameters implements Service interface.
-func (Redis) Parameters() []string {
-	return []string{
-		"url",
-	}
 }
