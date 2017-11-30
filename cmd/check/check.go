@@ -3,10 +3,11 @@ package check
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/urfave/cli"
 
-	"github.com/ulule/dekiteru/checker"
+	"github.com/ulule/dekiteru/services"
 )
 
 const (
@@ -18,7 +19,7 @@ const (
 var Command = cli.Command{
 	Name:   "check",
 	Usage:  "add a task to the list",
-	Action: run,
+	Action: action,
 	Flags: []cli.Flag{
 		cli.StringFlag{
 			Name:  "service, s",
@@ -41,8 +42,8 @@ var Command = cli.Command{
 	},
 }
 
-// run is the check command action.
-func run(ctx *cli.Context) error {
+// action is the check command action.
+func action(ctx *cli.Context) error {
 	var (
 		service    = ctx.String("service")
 		interval   = ctx.Int("interval")
@@ -68,9 +69,44 @@ func run(ctx *cli.Context) error {
 		params[splits[0]] = strings.Join(splits[1:], "=")
 	}
 
-	err := checker.Run(service, interval, retry, params)
+	err := check(service, interval, retry, params)
 	if err != nil {
 		return cli.NewExitError(err, 10)
+	}
+
+	return err
+}
+
+// check runs the given service.
+func check(service string, interval int, retries int, parameters map[string]interface{}) error {
+	var (
+		delta time.Duration
+		start time.Time
+		err   error
+		code  int
+	)
+
+	checkr, ok := services.Services[service]
+	if !ok {
+		return fmt.Errorf("%s service does not exist", service)
+	}
+
+	for t := 1; t <= retries; t++ {
+		start = time.Now()
+
+		code, err = checkr(parameters)
+		if code > 1 && err == nil {
+			return err
+		}
+
+		if t+1 > retries {
+			return err
+		}
+
+		delta = time.Now().Sub(start)
+		if delta < time.Duration(interval)*time.Second {
+			time.Sleep(time.Duration(interval)*time.Second - delta)
+		}
 	}
 
 	return err
