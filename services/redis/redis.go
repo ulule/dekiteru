@@ -10,8 +10,8 @@ const (
 	defaultURL = "redis://localhost:6379/0"
 )
 
-// Check checks Redis service.
-func Check(parameters map[string]interface{}) (int, error) {
+// Run checks Redis service.
+func Run(parameters map[string]interface{}) (int, error) {
 	var (
 		c   redigo.Conn
 		url string

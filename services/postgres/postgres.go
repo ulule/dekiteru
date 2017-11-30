@@ -14,8 +14,8 @@ const (
 	defaultDSN = "postgres://?connect_timeout=5"
 )
 
-// Check checks PostgreSQL service.
-func Check(parameters map[string]interface{}) (int, error) {
+// Run checks PostgreSQL service.
+func Run(parameters map[string]interface{}) (int, error) {
 	var (
 		dsn string
 		err error

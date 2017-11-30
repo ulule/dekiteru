@@ -10,8 +10,8 @@ const (
 	defaultURL = "http://localhost:9201"
 )
 
-// Check checks Elasticsearch service.
-func Check(parameters map[string]interface{}) (int, error) {
+// Run checks Elasticsearch service.
+func Run(parameters map[string]interface{}) (int, error) {
 	var (
 		url string
 		ok  bool
