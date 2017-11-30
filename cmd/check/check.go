@@ -1,4 +1,4 @@
-package cmd
+package check
 
 import (
 	"fmt"
@@ -9,10 +9,16 @@ import (
 	"github.com/ulule/dekiteru/checker"
 )
 
-var checkCommand = cli.Command{
+const (
+	defaultInterval = 1
+	defaultRetry    = 10
+)
+
+// Command is the check command.
+var Command = cli.Command{
 	Name:   "check",
 	Usage:  "add a task to the list",
-	Action: checkAction,
+	Action: run,
 	Flags: []cli.Flag{
 		cli.StringFlag{
 			Name:  "service, s",
@@ -20,12 +26,12 @@ var checkCommand = cli.Command{
 		},
 		cli.IntFlag{
 			Name:  "interval, i",
-			Value: 1,
+			Value: defaultInterval,
 			Usage: "Interval between retries in second",
 		},
 		cli.IntFlag{
 			Name:  "retry, r",
-			Value: 10,
+			Value: defaultRetry,
 			Usage: "Number of retry",
 		},
 		cli.StringSliceFlag{
@@ -35,8 +41,8 @@ var checkCommand = cli.Command{
 	},
 }
 
-// check is the check action.
-func checkAction(ctx *cli.Context) error {
+// run is the check command action.
+func run(ctx *cli.Context) error {
 	var (
 		service    = ctx.String("service")
 		interval   = ctx.Int("interval")
