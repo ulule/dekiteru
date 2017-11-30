@@ -3,5 +3,17 @@
   version = "1.20.0"
 
 [[constraint]]
+  name = "github.com/pkg/errors"
+  version = "v0.8.0"
+
+[[constraint]]
   name = "gopkg.in/olivere/elastic.v5"
   version = "5.0.56"
+
+[[constraint]]
+  name = "github.com/lib/pq"
+  revision = "8c6ee72f3e6bcb1542298dd5f76cb74af9742cec"
+
+[[constraint]]
+  name = "github.com/garyburd/redigo"
+  version = "v1.3.0"
