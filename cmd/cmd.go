@@ -9,14 +9,13 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Cmd is the CLI application.
 type Cmd struct {
-	App     *cli.App
-	Checker *checker.Checker
+	App *cli.App
 }
 
+// New returns a new Cmd instance.
 func New() *Cmd {
-	c := checker.New()
-
 	a := cli.NewApp()
 	a.Name = "Dekiteru"
 	a.Version = "0.1.0"
@@ -32,6 +31,7 @@ func New() *Cmd {
 					cli.ShowAppHelp(ctx)
 					return cli.NewExitError("", 1)
 				}
+
 				parameters := map[string]interface{}{}
 				for _, value := range ctx.StringSlice("parameters") {
 					splits := strings.Split(value, "=")
@@ -39,10 +39,12 @@ func New() *Cmd {
 					val := strings.Join(splits[1:], "=")
 					parameters[key] = val
 				}
-				err := c.Run(ctx.String("service"), ctx.Int("interval"), ctx.Int("retry"), parameters)
+
+				err := checker.Run(ctx.String("service"), ctx.Int("interval"), ctx.Int("retry"), parameters)
 				if err != nil {
 					return cli.NewExitError(err, 10)
 				}
+
 				return err
 			},
 			Flags: []cli.Flag{
@@ -67,7 +69,8 @@ func New() *Cmd {
 			},
 		},
 	}
-	return &Cmd{App: a, Checker: c}
+
+	return &Cmd{App: a}
 }
 
 func (c Cmd) Run() {

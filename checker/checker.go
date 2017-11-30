@@ -7,23 +7,20 @@ import (
 	"github.com/ulule/dekiteru/services"
 )
 
-type Checker struct{}
-
-func New() *Checker {
-	return &Checker{}
-}
-
-func (Checker) Run(service string, interval int, retries int, parameters map[string]interface{}) error {
+// Run runs the given service.
+func Run(service string, interval int, retries int, parameters map[string]interface{}) error {
 	var (
 		delta time.Duration
 		start time.Time
 		err   error
 		code  int
 	)
+
 	s := services.Get(service)
 	if s == nil {
 		return errors.New("this service does not exist")
 	}
+
 	for t := 1; t <= retries; t++ {
 		start = time.Now()
 
@@ -41,5 +38,6 @@ func (Checker) Run(service string, interval int, retries int, parameters map[str
 			time.Sleep(time.Duration(interval)*time.Second - delta)
 		}
 	}
+
 	return err
 }
