@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/ulule/dekiteru/services/elasticsearch"
-	"github.com/ulule/dekiteru/services/postgresql"
+	"github.com/ulule/dekiteru/services/postgres"
 	"github.com/ulule/dekiteru/services/redis"
 )
 
@@ -11,7 +11,7 @@ type Checker func(parameters map[string]interface{}) (int, error)
 
 // Services are built-in services.
 var Services = map[string]Checker{
-	"postgresql":    postgresql.Check,
+	"postgres":      postgres.Check,
 	"redis":         redis.Check,
 	"elasticsearch": elasticsearch.Check,
 }
