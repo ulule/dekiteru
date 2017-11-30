@@ -4,6 +4,7 @@ package services
 type Service interface {
 	Run(parameters map[string]interface{}) (int, error)
 	Name() string
+	Parameters() []string
 }
 
 // Services are built-in services.
