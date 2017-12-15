@@ -1,10 +1,14 @@
 package main
 
 import (
+	"log"
+
 	"github.com/ulule/dekiteru/cmd"
 )
 
 func main() {
-	cmd := cmd.New()
-	cmd.Run()
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

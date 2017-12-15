@@ -5,31 +5,35 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ulule/dekiteru/checker"
 	"github.com/urfave/cli"
+
+	"github.com/ulule/dekiteru/checker"
 )
 
-type Cmd struct {
-	App     *cli.App
-	Checker *checker.Checker
-}
+const (
+	name    = "Dekiteru"
+	version = "0.1.0"
+	usage   = "Check if a service is ready to use"
+)
 
-func New() *Cmd {
-	c := checker.New()
-
+// Run runs the CLI application.
+func Run() error {
 	a := cli.NewApp()
-	a.Name = "Dekiteru"
-	a.Version = "0.1.0"
-	a.Usage = "Check if a service is ready to use"
+	a.Name = name
+	a.Version = version
+	a.Usage = usage
 	a.Flags = []cli.Flag{}
 	a.Commands = []cli.Command{
 		{
 			Name:  "check",
-			Usage: "add a task to the list",
+			Usage: "Check if a service is ready to use",
 			Action: func(ctx *cli.Context) error {
 				if ctx.String("service") == "" {
 					fmt.Println("Error: --service parameter is missing")
-					cli.ShowAppHelp(ctx)
+					err := cli.ShowAppHelp(ctx)
+					if err != nil {
+						return err
+					}
 					return cli.NewExitError("", 1)
 				}
 				parameters := map[string]interface{}{}
@@ -39,7 +43,8 @@ func New() *Cmd {
 					val := strings.Join(splits[1:], "=")
 					parameters[key] = val
 				}
-				err := c.Run(ctx.String("service"), ctx.Int("interval"), ctx.Int("retry"), parameters)
+
+				err := checker.Run(ctx.String("service"), ctx.Int("interval"), ctx.Int("retry"), parameters)
 				if err != nil {
 					return cli.NewExitError(err, 10)
 				}
@@ -67,9 +72,5 @@ func New() *Cmd {
 			},
 		},
 	}
-	return &Cmd{App: a, Checker: c}
-}
-
-func (c Cmd) Run() {
-	c.App.Run(os.Args)
+	return a.Run(os.Args)
 }
