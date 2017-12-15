@@ -23,8 +23,15 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 		start = time.Now()
 
 		code, err = s.Run(parameters)
-		if code > 1 && err == nil {
+		switch code {
+		// Everything is ok
+		case 0:
 			return err
+		// Soft error
+		case 1:
+			return err
+		// Hard error
+		case 2:
 		}
 
 		if t+1 > retries {

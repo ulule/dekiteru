@@ -27,7 +27,7 @@ func (ElasticSearch) Run(parameters map[string]interface{}) (int, error) {
 	_, err = elastic.NewClient(elastic.SetURL(url))
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 10, err
+		return 2, err
 	}
 
 	return 0, nil

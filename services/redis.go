@@ -28,7 +28,7 @@ func (Redis) Run(parameters map[string]interface{}) (int, error) {
 	c, err = redis.DialURL(url)
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 10, err
+		return 2, err
 	}
 
 	defer c.Close()

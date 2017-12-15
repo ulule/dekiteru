@@ -25,12 +25,13 @@ func Run() error {
 	a.Flags = []cli.Flag{}
 	a.Commands = []cli.Command{
 		{
-			Name:  "check",
-			Usage: "Check if a service is ready to use",
+			Name:    "check",
+			Aliases: []string{"c"},
+			Usage:   "Check if a service is ready to use",
 			Action: func(ctx *cli.Context) error {
 				if ctx.String("service") == "" {
 					fmt.Println("Error: --service parameter is missing")
-					err := cli.ShowAppHelp(ctx)
+					err := cli.ShowSubcommandHelp(ctx)
 					if err != nil {
 						return err
 					}

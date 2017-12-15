@@ -35,13 +35,13 @@ func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 1, err
+		return 2, err
 	}
 
 	err = db.Ping()
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 10, err
+		return 2, err
 	}
 
 	return 0, nil
