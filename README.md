@@ -4,24 +4,16 @@ Dekiteru is a tool that checks if a service is ready to use.
 
 ## Examples
 
-`Postgresql`:
-
 ```bash
-dekiteru check --service postgresql \
+# PostgreSQL
+dekiteru check --service postgresql --interval 5 --retry 5 \
                --parameter "dsn=postgres://localhost:5432?connect_timeout=5"
-```
 
-`Redis`:
-
-```bash
+# Redis
 dekiteru check --service redis --parameter "url=redis://localhost:16379/1"
-```
 
-`ElasticSearch`
-
-```bash
-dekiteru check --service elasticsearch \
-               --parameter "url=http://localhost:9200"
+# ElasticSearch
+dekiteru check --service elasticsearch --parameter "url=http://localhost:9200"
 ```
 
 ## Help
