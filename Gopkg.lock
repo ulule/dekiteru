@@ -19,6 +19,12 @@
   version = "v0.8.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/streadway/amqp"
+  packages = ["."]
+  revision = "ff34ec9cc65c2a23db5126d962c431018f65af59"
+
+[[projects]]
   name = "github.com/urfave/cli"
   packages = ["."]
   revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
@@ -33,6 +39,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8f329f076d9bb6743886e4c077ab5bb5d0a41b2c8e99d788b6d72a0ca32e0c5a"
+  inputs-digest = "6d6a75a1a99420b4642911ad24d06c208b7855d7e20cb4f62a7df10a2ffd43d8"
   solver-name = "gps-cdcl"
   solver-version = 1

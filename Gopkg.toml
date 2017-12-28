@@ -17,3 +17,7 @@
 [[constraint]]
   name = "gopkg.in/olivere/elastic.v5"
   version = "5.0.56"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/streadway/amqp"
