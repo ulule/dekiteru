@@ -38,7 +38,7 @@ func Run() error {
 					return cli.NewExitError("", 1)
 				}
 				parameters := map[string]interface{}{}
-				for _, value := range ctx.StringSlice("parameters") {
+				for _, value := range ctx.StringSlice("parameter") {
 					splits := strings.Split(value, "=")
 					key := splits[0]
 					val := strings.Join(splits[1:], "=")
@@ -67,8 +67,8 @@ func Run() error {
 					Usage: "Number of retry",
 				},
 				cli.StringSliceFlag{
-					Name:  "parameters, p",
-					Usage: "Parameter to send to service checker",
+					Name:  "parameter, p",
+					Usage: "Parameter to send to service checker (repeatable)",
 				},
 			},
 		},
