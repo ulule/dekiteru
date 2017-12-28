@@ -2,6 +2,7 @@ package checker
 
 import (
 	"errors"
+	"log"
 	"time"
 
 	"github.com/ulule/dekiteru/services"
@@ -24,6 +25,10 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 		err := s.Run(parameters)
 		switch err.(type) {
 		case *services.HardError:
+			return err
+		case *services.SoftError:
+			log.Println(err)
+		case nil:
 			return err
 		}
 
