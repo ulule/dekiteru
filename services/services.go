@@ -12,4 +12,5 @@ var Services = map[string]Service{
 	"postgresql":    Postgresql{},
 	"redis":         Redis{},
 	"elasticsearch": ElasticSearch{},
+	"rabbitmq":      RabbitMQ{},
 }
