@@ -8,15 +8,17 @@ Dekiteru is a tool that checks if a service is ready to use.
 # PostgreSQL
 dekiteru check --service postgresql --interval 5 --retry 5 \
                --parameter "dsn=postgres://localhost:5432?connect_timeout=5"
-
 # Redis
 dekiteru check --service redis --parameter "url=redis://localhost:16379/1"
-
 # ElasticSearch
 dekiteru check --service elasticsearch --parameter "url=http://localhost:9200"
+# RabbitMQ
+dekiteru check --service rabbitmq
 ```
 
 ## Help
+
+Supported services: `PostgreSQL`, `Redis`, `ElasticSearch` and `RabbitMQ`.
 
 ```
 $ dekiteru help
