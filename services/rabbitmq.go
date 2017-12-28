@@ -1,7 +1,11 @@
 package services
 
 import (
+	"errors"
 	"log"
+	"net"
+	"strconv"
+	"time"
 
 	"github.com/streadway/amqp"
 )
@@ -12,9 +16,11 @@ type RabbitMQ struct{}
 // Run implements Service interface.
 func (RabbitMQ) Run(parameters map[string]interface{}) error {
 	var (
-		ok  bool
-		uri string
-		err error
+		ok            bool
+		uri           string
+		timeoutString string
+		timeout       int
+		err           error
 	)
 
 	uri, ok = parameters["uri"].(string)
@@ -22,9 +28,29 @@ func (RabbitMQ) Run(parameters map[string]interface{}) error {
 		uri = "amqp://guest:guest@127.0.0.1/"
 	}
 
-	log.Printf(`uri: "%s"`, uri)
+	timeoutString, ok = parameters["timeout"].(string)
+	if ok {
+		timeout, err = strconv.Atoi(timeoutString)
+		if err != nil {
+			return &HardError{errors.New("invalid `timeout` parameter")}
 
-	_, err = amqp.Dial(uri)
+		}
+		if timeout < 1 {
+			return &HardError{errors.New("invalid `timeout` parameter (cannot be below 1 second)")}
+		}
+
+	} else {
+		timeout = 2
+	}
+
+	log.Printf(`uri    : "%s"`, uri)
+	log.Printf(`timeout: "%d"`, timeout)
+
+	_, err = amqp.DialConfig(uri, amqp.Config{
+		Dial: func(network, addr string) (net.Conn, error) {
+			return net.DialTimeout(network, addr, time.Duration(timeout)*time.Second)
+		},
+	})
 	if err != nil {
 		return &SoftError{err}
 	}
@@ -41,5 +67,6 @@ func (RabbitMQ) Name() string {
 func (RabbitMQ) Parameters() []string {
 	return []string{
 		"uri",
+		"timeout",
 	}
 }
