@@ -14,7 +14,7 @@ import (
 type Postgresql struct{}
 
 // Run implements Service interface.
-func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
+func (Postgresql) Run(parameters map[string]interface{}) error {
 	var (
 		dsn string
 		err error
@@ -27,7 +27,7 @@ func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
 	}
 
 	if !strings.Contains(dsn, "connect_timeout") {
-		return 1, errors.New(`missing "connect_timeout" parameter in postgresql url`)
+		return &HardError{errors.New(`missing "connect_timeout" parameter in postgresql url`)}
 	}
 
 	log.Printf(`dsn: "%s"`, dsn)
@@ -35,16 +35,16 @@ func (Postgresql) Run(parameters map[string]interface{}) (int, error) {
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 2, err
+		return &SoftError{err}
 	}
 
 	err = db.Ping()
 	if err != nil {
 		log.Printf(`Error: "%s"`, err)
-		return 2, err
+		return &SoftError{err}
 	}
 
-	return 0, nil
+	return nil
 }
 
 // Name implements Service interface.

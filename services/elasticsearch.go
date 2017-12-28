@@ -10,7 +10,7 @@ import (
 type ElasticSearch struct{}
 
 // Run implements Service interface.
-func (ElasticSearch) Run(parameters map[string]interface{}) (int, error) {
+func (ElasticSearch) Run(parameters map[string]interface{}) error {
 	var (
 		url string
 		ok  bool
@@ -26,11 +26,10 @@ func (ElasticSearch) Run(parameters map[string]interface{}) (int, error) {
 
 	_, err = elastic.NewClient(elastic.SetURL(url))
 	if err != nil {
-		log.Printf(`Error: "%s"`, err)
-		return 2, err
+		return &SoftError{err}
 	}
 
-	return 0, nil
+	return nil
 }
 
 // Name implements Service interface.

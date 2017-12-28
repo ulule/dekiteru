@@ -10,7 +10,7 @@ import (
 type Redis struct{}
 
 // Run implements Service interface.
-func (Redis) Run(parameters map[string]interface{}) (int, error) {
+func (Redis) Run(parameters map[string]interface{}) error {
 	var (
 		c   redis.Conn
 		url string
@@ -27,13 +27,12 @@ func (Redis) Run(parameters map[string]interface{}) (int, error) {
 
 	c, err = redis.DialURL(url)
 	if err != nil {
-		log.Printf(`Error: "%s"`, err)
-		return 2, err
+		return &SoftError{err}
 	}
 
 	defer c.Close()
 
-	return 0, nil
+	return nil
 }
 
 // Name implements Service interface

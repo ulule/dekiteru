@@ -2,7 +2,7 @@ package services
 
 // Service represents a service.
 type Service interface {
-	Run(parameters map[string]interface{}) (int, error)
+	Run(parameters map[string]interface{}) error
 	Name() string
 	Parameters() []string
 }

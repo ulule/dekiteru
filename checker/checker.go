@@ -13,7 +13,6 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 		delta time.Duration
 		start time.Time
 		err   error
-		code  int
 	)
 	s, ok := services.Services[service]
 	if !ok {
@@ -22,16 +21,10 @@ func Run(service string, interval int, retries int, parameters map[string]interf
 	for t := 1; t <= retries; t++ {
 		start = time.Now()
 
-		code, err = s.Run(parameters)
-		switch code {
-		// Everything is ok
-		case 0:
+		err := s.Run(parameters)
+		switch err.(type) {
+		case *services.HardError:
 			return err
-		// Soft error
-		case 1:
-			return err
-		// Hard error
-		case 2:
 		}
 
 		if t+1 > retries {
