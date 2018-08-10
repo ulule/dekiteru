@@ -38,3 +38,7 @@ GLOBAL OPTIONS:
    --help, -h     show help
    --version, -v  print the version
 ```
+
+## Authors
+
+* [Geoffrey L.](https://github.com/toxinu)
